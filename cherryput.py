@@ -1,5 +1,7 @@
 #!/usr/bin/python
 
+import os
+
 import cherrypy
 
 class CherryPut:
@@ -7,7 +9,13 @@ class CherryPut:
     @cherrypy.expose
     def default(self, *args, **kwargs):
         if cherrypy.request.method == 'PUT':
-            fd = open('./' + cherrypy.request.path_info, 'w')
+            putpath = './' + cherrypy.request.path_info
+            pathlist = putpath.rsplit('/', 1)
+            dirs = pathlist[0] if pathlist[0] else '.'
+            fname = pathlist[1]
+            if not os.path.isdir(dirs):
+                os.makedirs(dirs)
+            fd = open(putpath, 'w')
             fd.write(cherrypy.request.body.read())
             fd.close()
             cherrypy.response.status = 201
