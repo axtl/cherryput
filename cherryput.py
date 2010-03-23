@@ -1,11 +1,17 @@
 #!/usr/bin/python
 
-import os
+# Copyright (C) 2010 - Alexandru Totolici
+# http://bitbucket.org/alexandru/cherryput
+#
+# This software may be used and distributed according to the terms of the
+# New BSD License.
 
+import os
 import cherrypy
 
+
 class CherryPut:
-           
+
     @cherrypy.expose
     def default(self, *args, **kwargs):
         if cherrypy.request.method == 'PUT':
